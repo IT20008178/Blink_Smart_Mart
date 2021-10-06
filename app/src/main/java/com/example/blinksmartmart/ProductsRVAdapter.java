@@ -17,35 +17,35 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.ViewHolder> {
+public class ProductsRVAdapter extends RecyclerView.Adapter<ProductsRVAdapter.ViewHolder> {
     // creating variables for our list, context, interface and position.
-    private ArrayList<CourseRVModal> courseRVModalArrayList;
+    private ArrayList<ProductsRVModal> productsRVModalArrayList;
     private Context context;
     private CourseClickInterface courseClickInterface;
     int lastPos = -1;
 
     // creating a constructor.
-    public CourseRVAdapter(ArrayList<CourseRVModal> courseRVModalArrayList, Context context, CourseClickInterface courseClickInterface) {
-        this.courseRVModalArrayList = courseRVModalArrayList;
+    public ProductsRVAdapter(ArrayList<ProductsRVModal> productsRVModalArrayList, Context context, CourseClickInterface courseClickInterface) {
+        this.productsRVModalArrayList = productsRVModalArrayList;
         this.context = context;
         this.courseClickInterface = courseClickInterface;
     }
 
     @NonNull
     @Override
-    public CourseRVAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ProductsRVAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // inflating our layout file on below line.
-        View view = LayoutInflater.from(context).inflate(R.layout.course_rv_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.products_rv_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CourseRVAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull ProductsRVAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // setting data to our recycler view item on below line.
-        CourseRVModal courseRVModal = courseRVModalArrayList.get(position);
-        holder.courseTV.setText(courseRVModal.getCourseName());
-        holder.coursePriceTV.setText("Rs. " + courseRVModal.getCoursePrice());
-        Picasso.get().load(courseRVModal.getCourseImg()).into(holder.courseIV);
+        ProductsRVModal productsRVModal = productsRVModalArrayList.get(position);
+        holder.courseTV.setText(productsRVModal.getCourseName());
+        holder.coursePriceTV.setText("Rs. " + productsRVModal.getCoursePrice());
+        Picasso.get().load(productsRVModal.getCourseImg()).into(holder.courseIV);
         // adding animation to recycler view item on below line.
         setAnimation(holder.itemView, position);
         holder.courseIV.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +67,7 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return courseRVModalArrayList.size();
+        return productsRVModalArrayList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
