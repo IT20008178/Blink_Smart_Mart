@@ -3,7 +3,7 @@ package com.example.blinksmartmart;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class ProductsRVModal implements Parcelable {
+public class CourseRVModal implements Parcelable {
     // creating variables for our different fields.
     private String courseName;
     private String courseDescription;
@@ -24,11 +24,11 @@ public class ProductsRVModal implements Parcelable {
 
 
     // creating an empty constructor.
-    public ProductsRVModal() {
+    public CourseRVModal() {
 
     }
 
-    protected ProductsRVModal(Parcel in) {
+    protected CourseRVModal(Parcel in) {
         courseName = in.readString();
         courseId = in.readString();
         courseDescription = in.readString();
@@ -38,15 +38,15 @@ public class ProductsRVModal implements Parcelable {
         courseLink = in.readString();
     }
 
-    public static final Creator<ProductsRVModal> CREATOR = new Creator<ProductsRVModal>() {
+    public static final Creator<CourseRVModal> CREATOR = new Creator<CourseRVModal>() {
         @Override
-        public ProductsRVModal createFromParcel(Parcel in) {
-            return new ProductsRVModal(in);
+        public CourseRVModal createFromParcel(Parcel in) {
+            return new CourseRVModal(in);
         }
 
         @Override
-        public ProductsRVModal[] newArray(int size) {
-            return new ProductsRVModal[size];
+        public CourseRVModal[] newArray(int size) {
+            return new CourseRVModal[size];
         }
     };
 
@@ -100,7 +100,7 @@ public class ProductsRVModal implements Parcelable {
     }
 
 
-    public ProductsRVModal(String courseId, String courseName, String courseDescription, String coursePrice, String bestSuitedFor, String courseImg, String courseLink) {
+    public CourseRVModal(String courseId, String courseName, String courseDescription, String coursePrice, String bestSuitedFor, String courseImg, String courseLink) {
         this.courseName = courseName;
         this.courseId = courseId;
         this.courseDescription = courseDescription;

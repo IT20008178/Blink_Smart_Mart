@@ -32,7 +32,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ProductsRVAdapter.CourseClickInterface {
+public class MainActivity extends AppCompatActivity implements CourseRVAdapter.CourseClickInterface {
 
     // creating variables for fab, firebase database,
     // progress bar, list, adapter,firebase auth,
@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity implements ProductsRVAdapter
     private RecyclerView courseRV;
     private FirebaseAuth mAuth;
     private ProgressBar loadingPB;
-    private ArrayList<ProductsRVModal> productsRVModalArrayList;
-    private ProductsRVAdapter productsRVAdapter;
+    private ArrayList<CourseRVModal> courseRVModalArrayList;
+    private CourseRVAdapter courseRVAdapter;
     private RelativeLayout homeRL;
 
     @Override
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements ProductsRVAdapter
         addCourseFAB = findViewById(R.id.idFABAddCourse);
         firebaseDatabase = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        productsRVModalArrayList = new ArrayList<>();
+        courseRVModalArrayList = new ArrayList<>();
         // on below line we are getting database reference.
         databaseReference = firebaseDatabase.getReference("Courses");
         // on below line adding a click listener for our floating action button.
@@ -66,23 +66,23 @@ public class MainActivity extends AppCompatActivity implements ProductsRVAdapter
             @Override
             public void onClick(View v) {
                 // opening a new activity for adding a course.
-                Intent i = new Intent(MainActivity.this, AddProductsActivity.class);
+                Intent i = new Intent(MainActivity.this, AddCourseActivity.class);
                 startActivity(i);
             }
         });
         // on below line initializing our adapter class.
-        productsRVAdapter = new ProductsRVAdapter(productsRVModalArrayList, this, this::onCourseClick);
+        courseRVAdapter = new CourseRVAdapter(courseRVModalArrayList, this, this::onCourseClick);
         // setting layout malinger to recycler view on below line.
         courseRV.setLayoutManager(new LinearLayoutManager(this));
         // setting adapter to recycler view on below line.
-        courseRV.setAdapter(productsRVAdapter);
+        courseRV.setAdapter(courseRVAdapter);
         // on below line calling a method to fetch courses from database.
         getCourses();
     }
 
     private void getCourses() {
         // on below line clearing our list.
-        productsRVModalArrayList.clear();
+        courseRVModalArrayList.clear();
         // on below line we are calling add child event listener method to read the data.
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
@@ -90,9 +90,9 @@ public class MainActivity extends AppCompatActivity implements ProductsRVAdapter
                 // on below line we are hiding our progress bar.
                 loadingPB.setVisibility(View.GONE);
                 // adding snapshot to our array list on below line.
-                productsRVModalArrayList.add(snapshot.getValue(ProductsRVModal.class));
+                courseRVModalArrayList.add(snapshot.getValue(CourseRVModal.class));
                 // notifying our adapter that data has changed.
-                productsRVAdapter.notifyDataSetChanged();
+                courseRVAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -101,13 +101,13 @@ public class MainActivity extends AppCompatActivity implements ProductsRVAdapter
                 // we are notifying our adapter and making progress bar
                 // visibility as gone.
                 loadingPB.setVisibility(View.GONE);
-                productsRVAdapter.notifyDataSetChanged();
+                courseRVAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
                 // notifying our adapter when child is removed.
-                productsRVAdapter.notifyDataSetChanged();
+                courseRVAdapter.notifyDataSetChanged();
                 loadingPB.setVisibility(View.GONE);
 
             }
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements ProductsRVAdapter
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 // notifying our adapter when child is moved.
-                productsRVAdapter.notifyDataSetChanged();
+                courseRVAdapter.notifyDataSetChanged();
                 loadingPB.setVisibility(View.GONE);
             }
 
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements ProductsRVAdapter
     @Override
     public void onCourseClick(int position) {
         // calling a method to display a bottom sheet on below line.
-        displayBottomSheet(productsRVModalArrayList.get(position));
+        displayBottomSheet(courseRVModalArrayList.get(position));
     }
 
     @Override
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements ProductsRVAdapter
         return true;
     }
 
-    private void displayBottomSheet(ProductsRVModal modal) {
+    private void displayBottomSheet(CourseRVModal modal) {
         // on below line we are creating our bottom sheet dialog.
         final BottomSheetDialog bottomSheetTeachersDialog = new BottomSheetDialog(this, R.style.BottomSheetDialogTheme);
         // on below line we are inflating our layout file for our bottom sheet.
@@ -193,8 +193,8 @@ public class MainActivity extends AppCompatActivity implements ProductsRVAdapter
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // on below line we are opening our EditProductsActivity on below line.
-                Intent i = new Intent(MainActivity.this, EditProductsActivity.class);
+                // on below line we are opening our EditCourseActivity on below line.
+                Intent i = new Intent(MainActivity.this, EditCourseActivity.class);
                 // on below line we are passing our course modal
                 i.putExtra("course", modal);
                 startActivity(i);
