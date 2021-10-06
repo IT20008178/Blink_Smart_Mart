@@ -13,10 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class AddProductsActivity extends AppCompatActivity {
+public class AddCourseActivity extends AppCompatActivity {
 
     // creating variables for our button, edit text,
     // firebase database, database refrence, progress bar.
@@ -30,7 +33,7 @@ public class AddProductsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_products);
+        setContentView(R.layout.activity_add_course);
         // initializing all our variables.
         addCourseBtn = findViewById(R.id.idBtnAddCourse);
         courseNameEdt = findViewById(R.id.idEdtCourseName);
@@ -57,24 +60,24 @@ public class AddProductsActivity extends AppCompatActivity {
                 String courseLink = courseLinkEdt.getText().toString();
                 courseID = courseName;
                 // on below line we are passing all data to our modal class.
-                ProductsRVModal productsRVModal = new ProductsRVModal(courseID, courseName, courseDesc, coursePrice, bestSuited, courseImg, courseLink);
+                CourseRVModal courseRVModal = new CourseRVModal(courseID, courseName, courseDesc, coursePrice, bestSuited, courseImg, courseLink);
                 // on below line we are calling a add value event
                 // to pass data to firebase database.
 
                     // on below line we are setting data in our firebase database.
-                    databaseReference.child(courseID).setValue(productsRVModal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    databaseReference.child(courseID).setValue(courseRVModal).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             // displaying a toast message.
-                            Toast.makeText(AddProductsActivity.this, "Product Added..", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddCourseActivity.this, "Product Added..", Toast.LENGTH_SHORT).show();
                             // starting a main activity.
-                            startActivity(new Intent(AddProductsActivity.this, MainActivity.class));
+                            startActivity(new Intent(AddCourseActivity.this, MainActivity.class));
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AddProductsActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddCourseActivity.this, "Error", Toast.LENGTH_SHORT).show();
                         }
                     });
 

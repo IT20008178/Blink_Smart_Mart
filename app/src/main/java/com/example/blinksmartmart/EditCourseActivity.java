@@ -13,20 +13,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditProductsActivity extends AppCompatActivity {
+public class EditCourseActivity extends AppCompatActivity {
 
     // creating variables for our edit text, firebase database,
     // database reference, course rv modal,progress bar.
     private TextInputEditText courseNameEdt, courseDescEdt, coursePriceEdt, bestSuitedEdt, courseImgEdt, courseLinkEdt;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    ProductsRVModal productsRVModal;
+    CourseRVModal courseRVModal;
     private ProgressBar loadingPB;
     // creating a string for our course id.
     private String courseID;
@@ -34,7 +37,7 @@ public class EditProductsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_products);
+        setContentView(R.layout.activity_edit_course);
         // initializing all our variables on below line.
         Button addCourseBtn = findViewById(R.id.idBtnAddCourse);
         courseNameEdt = findViewById(R.id.idEdtCourseName);
@@ -46,18 +49,18 @@ public class EditProductsActivity extends AppCompatActivity {
         loadingPB = findViewById(R.id.idPBLoading);
         firebaseDatabase = FirebaseDatabase.getInstance();
         // on below line we are getting our modal class on which we have passed.
-        productsRVModal = getIntent().getParcelableExtra("course");
+        courseRVModal = getIntent().getParcelableExtra("course");
         Button deleteCourseBtn = findViewById(R.id.idBtnDeleteCourse);
 
-        if (productsRVModal != null) {
+        if (courseRVModal != null) {
             // on below line we are setting data to our edit text from our modal class.
-            courseNameEdt.setText(productsRVModal.getCourseName());
-            coursePriceEdt.setText(productsRVModal.getCoursePrice());
-            bestSuitedEdt.setText(productsRVModal.getBestSuitedFor());
-            courseImgEdt.setText(productsRVModal.getCourseImg());
-            courseLinkEdt.setText(productsRVModal.getCourseLink());
-            courseDescEdt.setText(productsRVModal.getCourseDescription());
-            courseID = productsRVModal.getCourseId();
+            courseNameEdt.setText(courseRVModal.getCourseName());
+            coursePriceEdt.setText(courseRVModal.getCoursePrice());
+            bestSuitedEdt.setText(courseRVModal.getBestSuitedFor());
+            courseImgEdt.setText(courseRVModal.getCourseImg());
+            courseLinkEdt.setText(courseRVModal.getCourseLink());
+            courseDescEdt.setText(courseRVModal.getCourseDescription());
+            courseID = courseRVModal.getCourseId();
         }
 
         // on below line we are initialing our database reference and we are adding a child as our course id.
@@ -96,30 +99,30 @@ public class EditProductsActivity extends AppCompatActivity {
 //                        // adding a map to our database.
 //                        databaseReference.updateChildren(map);
 //                        // on below line we are displaying a toast message.
-//                        Toast.makeText(EditProductsActivity.this, "Course Updated..", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(EditCourseActivity.this, "Course Updated..", Toast.LENGTH_SHORT).show();
 //                        // opening a new activity after updating our coarse.
-//                        startActivity(new Intent(EditProductsActivity.this, MainActivity.class));
+//                        startActivity(new Intent(EditCourseActivity.this, MainActivity.class));
 //                    }
 //
 //                    @Override
 //                    public void onCancelled(@NonNull DatabaseError error) {
 //                        // displaying a failure message on toast.
-//                        Toast.makeText(EditProductsActivity.this, "Fail to update course..", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(EditCourseActivity.this, "Fail to update course..", Toast.LENGTH_SHORT).show();
 //                    }
 //                });
 
                 databaseReference.setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(EditProductsActivity.this, "Product Updated..", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditCourseActivity.this, "Product Updated..", Toast.LENGTH_SHORT).show();
                         loadingPB.setVisibility(View.GONE);
-                        startActivity(new Intent(EditProductsActivity.this, MainActivity.class));
+                        startActivity(new Intent(EditCourseActivity.this, MainActivity.class));
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(EditProductsActivity.this, "Fail to update product..", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditCourseActivity.this, "Fail to update product..", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -142,6 +145,6 @@ public class EditProductsActivity extends AppCompatActivity {
         // displaying a toast message on below line.
         Toast.makeText(this, "Product Deleted..", Toast.LENGTH_SHORT).show();
         // opening a main activity on below line.
-        startActivity(new Intent(EditProductsActivity.this, MainActivity.class));
+        startActivity(new Intent(EditCourseActivity.this, MainActivity.class));
     }
 }
