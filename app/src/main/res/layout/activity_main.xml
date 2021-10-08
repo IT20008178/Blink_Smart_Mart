@@ -9,10 +9,10 @@
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/idRVCourses"
+        android:id="@+id/idRVShipping"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/course_rv_item" />
+        tools:listitem="@layout/shipping_rv_item" />
 
     <!--progress bar for loading indicator-->
     <ProgressBar
@@ -25,7 +25,7 @@
 
     <!--floating action button-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/idFABAddCourse"
+        android:id="@+id/idFABAddShipping"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

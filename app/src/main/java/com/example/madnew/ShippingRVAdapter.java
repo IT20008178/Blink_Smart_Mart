@@ -2,6 +2,7 @@ package com.example.madnew;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,45 +14,42 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
-public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.ViewHolder> {
+public class ShippingRVAdapter extends RecyclerView.Adapter<ShippingRVAdapter.ViewHolder> {
     // creating variables for our list, context, interface and position.
-    private ArrayList<CourseRVModal> courseRVModalArrayList;
+    private ArrayList<ShippingRVModal> shippingRVModalArrayList;
     private Context context;
-    private CourseClickInterface courseClickInterface;
+    private ShippingClickInterface ShippingClickInterface;
     int lastPos = -1;
 
     // creating a constructor.
-    public CourseRVAdapter(ArrayList<CourseRVModal> courseRVModalArrayList, Context context, CourseClickInterface courseClickInterface) {
-        this.courseRVModalArrayList = courseRVModalArrayList;
+    public ShippingRVAdapter(ArrayList<ShippingRVModal> shippingRVModalArrayList, Context context, ShippingClickInterface ShippingClickInterface) {
+        this.shippingRVModalArrayList = shippingRVModalArrayList;
         this.context = context;
-        this.courseClickInterface = courseClickInterface;
+        this.ShippingClickInterface = ShippingClickInterface;
     }
 
     @NonNull
     @Override
-    public CourseRVAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ShippingRVAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // inflating our layout file on below line.
-        View view = LayoutInflater.from(context).inflate(R.layout.course_rv_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.shipping_rv_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CourseRVAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull ShippingRVAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // setting data to our recycler view item on below line.
-        CourseRVModal courseRVModal = courseRVModalArrayList.get(position);
-        holder.courseTV.setText(courseRVModal.getCourseName());
-        holder.coursePriceTV.setText("Rs. " + courseRVModal.getCoursePrice());
-        Picasso.get().load(courseRVModal.getCourseImg()).into(holder.courseIV);
+        ShippingRVModal shippingRVModal = shippingRVModalArrayList.get(position);
+        holder.shippingName.setText(shippingRVModal.getShippingName());
+        holder.shippingContact.setText(shippingRVModal.getShippingContact());
         // adding animation to recycler view item on below line.
         setAnimation(holder.itemView, position);
-        holder.courseIV.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                courseClickInterface.onCourseClick(position);
+                ShippingClickInterface.onCardClick(position);
             }
         });
     }
@@ -67,26 +65,25 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return courseRVModalArrayList.size();
+        return shippingRVModalArrayList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // creating variable for our image view and text view on below line.
-        private ImageView courseIV;
-        private TextView courseTV, coursePriceTV;
+        TextView shippingName, shippingContact;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // initializing all our variables on below line.
-            courseIV = itemView.findViewById(R.id.idIVCourse);
-            courseTV = itemView.findViewById(R.id.idTVCOurseName);
-            coursePriceTV = itemView.findViewById(R.id.idTVCousePrice);
+            shippingName = itemView.findViewById(R.id.tv_shippingName);
+            shippingContact = itemView.findViewById(R.id.tv_shippingContact);
         }
     }
 
     // creating a interface for on click
-    public interface CourseClickInterface {
-        void onCourseClick(int position);
+    public interface ShippingClickInterface {
+        void onCardClick(int position);
     }
+
 }
 

@@ -1,46 +1,43 @@
 package com.example.madnew;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements CourseRVAdapter.CourseClickInterface {
+public class MainActivity extends AppCompatActivity implements ShippingRVAdapter.ShippingClickInterface {
 
     // creating variables for fab, firebase database,
     // progress bar, list, adapter,firebase auth,
     // recycler view and relative layout.
-    private FloatingActionButton addCourseFAB;
+    private FloatingActionButton addShippingFAB;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    private RecyclerView courseRV;
+    private RecyclerView shippingRV;
     private ProgressBar loadingPB;
-    private ArrayList<CourseRVModal> courseRVModalArrayList;
-    private CourseRVAdapter courseRVAdapter;
+    private ArrayList<ShippingRVModal> shippingRVModalArrayList;
+    private ShippingRVAdapter shippingRVAdapter;
     private RelativeLayout homeRL;
 
     @Override
@@ -48,69 +45,45 @@ public class MainActivity extends AppCompatActivity implements CourseRVAdapter.C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // initializing all our variables.
-        courseRV = findViewById(R.id.idRVCourses);
+        shippingRV = findViewById(R.id.idRVShipping);
         loadingPB = findViewById(R.id.idPBLoading);
-        addCourseFAB = findViewById(R.id.idFABAddCourse);
+        addShippingFAB = findViewById(R.id.idFABAddShipping);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        courseRVModalArrayList = new ArrayList<>();
+        shippingRVModalArrayList = new ArrayList<>();
         // on below line we are getting database reference.
-        databaseReference = firebaseDatabase.getReference("Courses");
+        databaseReference = firebaseDatabase.getReference("ShippingDetails");
         // on below line adding a click listener for our floating action button.
-        addCourseFAB.setOnClickListener(new View.OnClickListener() {
+        addShippingFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // opening a new activity for adding a course.
-                Intent i = new Intent(MainActivity.this, AddCourseActivity.class);
+                // opening a new activity for adding a shipping details.
+                Intent i = new Intent(MainActivity.this, AddShippingDetails.class);
                 startActivity(i);
             }
         });
         // on below line initializing our adapter class.
-        courseRVAdapter = new CourseRVAdapter(courseRVModalArrayList, this, this::onCourseClick);
+        shippingRVAdapter = new ShippingRVAdapter(shippingRVModalArrayList, this, this::onCardClick);
         // setting layout malinger to recycler view on below line.
-        courseRV.setLayoutManager(new LinearLayoutManager(this));
+        shippingRV.setLayoutManager(new LinearLayoutManager(this));
         // setting adapter to recycler view on below line.
-        courseRV.setAdapter(courseRVAdapter);
-        // on below line calling a method to fetch courses from database.
-        getCourses();
+        shippingRV.setAdapter(shippingRVAdapter);
+        // on below line calling a method to fetch details from database.
+        getShipping();
     }
 
-    private void getCourses() {
-        // on below line clearing our list.
-        courseRVModalArrayList.clear();
-        // on below line we are calling add child event listener method to read the data.
-        databaseReference.addChildEventListener(new ChildEventListener() {
+    private void getShipping() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // on below line we are hiding our progress bar.
-                loadingPB.setVisibility(View.GONE);
-                // adding snapshot to our array list on below line.
-                courseRVModalArrayList.add(snapshot.getValue(CourseRVModal.class));
-                // notifying our adapter that data has changed.
-                courseRVAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // this method is called when new child is added
-                // we are notifying our adapter and making progress bar
-                // visibility as gone.
-                loadingPB.setVisibility(View.GONE);
-                courseRVAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                // notifying our adapter when child is removed.
-                courseRVAdapter.notifyDataSetChanged();
-                loadingPB.setVisibility(View.GONE);
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // notifying our adapter when child is moved.
-                courseRVAdapter.notifyDataSetChanged();
-                loadingPB.setVisibility(View.GONE);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                shippingRVModalArrayList.clear();
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    ShippingRVModal shippingRVModal = dataSnapshot.getValue(ShippingRVModal.class);
+                    String shippingID = dataSnapshot.getKey();
+                    shippingRVModal.setShippingID(shippingID);
+                    shippingRVModalArrayList.add(shippingRVModal);
+                }
+                shippingRVAdapter.notifyDataSetChanged();
+                loadingPB.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -120,10 +93,12 @@ public class MainActivity extends AppCompatActivity implements CourseRVAdapter.C
         });
     }
 
+
+
     @Override
-    public void onCourseClick(int position) {
+    public void onCardClick(int position) {
         // calling a method to display a bottom sheet on below line.
-        displayBottomSheet(courseRVModalArrayList.get(position));
+        displayBottomSheet(shippingRVModalArrayList.get(position));
     }
 
 
@@ -136,7 +111,10 @@ public class MainActivity extends AppCompatActivity implements CourseRVAdapter.C
         return true;
     }
 
-    private void displayBottomSheet(CourseRVModal modal) {
+    @SuppressLint("SetTextI18n")
+    private void displayBottomSheet(ShippingRVModal modal) {
+//        TextView tv_shippingName, tv_shippingContact, tv_shippingNIC, tv_shippingEmail, tv_shippingProvince, tv_shippingAddress;
+
         // on below line we are creating our bottom sheet dialog.
         final BottomSheetDialog bottomSheetTeachersDialog = new BottomSheetDialog(this, R.style.BottomSheetDialogTheme);
         // on below line we are inflating our layout file for our bottom sheet.
@@ -151,18 +129,17 @@ public class MainActivity extends AppCompatActivity implements CourseRVAdapter.C
         // on below line we are creating variables for
         // our text view and image view inside bottom sheet
         // and initialing them with their ids.
-        TextView courseNameTV = layout.findViewById(R.id.idTVCourseName);
-        TextView courseDescTV = layout.findViewById(R.id.idTVCourseDesc);
-        TextView suitedForTV = layout.findViewById(R.id.idTVSuitedFor);
-        TextView priceTV = layout.findViewById(R.id.idTVCoursePrice);
-        ImageView courseIV = layout.findViewById(R.id.idIVCourse);
+        TextView name = layout.findViewById(R.id.idTVCourseName);
+        TextView address = layout.findViewById(R.id.idTVCourseDesc);
+        TextView nic = layout.findViewById(R.id.idTVSuitedFor);
+        TextView contact = layout.findViewById(R.id.idTVCoursePrice);
+//        tv_shippingEmail = findViewById(R.id.);
+//        tv_shippingProvince = findViewById(R.id.);
         // on below line we are setting data to different views on below line.
-        courseNameTV.setText(modal.getCourseName());
-        courseDescTV.setText(modal.getCourseDescription());
-        suitedForTV.setText("NIC " + modal.getBestSuitedFor());
-        priceTV.setText("No" + modal.getCoursePrice());
-        Picasso.get().load(modal.getCourseImg()).into(courseIV);
-        Button viewBtn = layout.findViewById(R.id.idBtnVIewDetails);
+        name.setText(modal.getShippingName());
+        contact.setText("Contact: " + modal.getShippingContact());
+        nic.setText("NIC: " + modal.getShippingNIC());
+        address.setText("Address: " + modal.getShippingAddress());
         Button editBtn = layout.findViewById(R.id.idBtnEditCourse);
 
         // adding on click listener for our edit button.
@@ -170,22 +147,12 @@ public class MainActivity extends AppCompatActivity implements CourseRVAdapter.C
             @Override
             public void onClick(View v) {
                 // on below line we are opening our EditCourseActivity on below line.
-                Intent i = new Intent(MainActivity.this, EditCourseActivity.class);
+                Intent i = new Intent(MainActivity.this, EditShippingDetails.class);
                 // on below line we are passing our course modal
-                i.putExtra("course", modal);
+                i.putExtra("shipping", modal);
                 startActivity(i);
             }
         });
-        // adding click listener for our view button on below line.
-        viewBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // on below line we are navigating to browser
-                // for displaying course details from its url
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(modal.getCourseLink()));
-                startActivity(i);
-            }
-        });
+
     }
 }

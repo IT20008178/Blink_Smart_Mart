@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back"
-    tools:context=".EditCourseActivity">
+    tools:context=".EditShippingDetails">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,9 +16,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!--edit text for adding a course name-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/idTILCourseName"
+
                 style="@style/LoginTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,7 +30,7 @@
                 app:hintTextColor="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/idEdtCourseName"
+                    android:id="@+id/tv_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
@@ -42,9 +41,8 @@
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!--edit text for adding a course price-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/idTILCoursePrice"
+
                 style="@style/LoginTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,7 +56,7 @@
                 app:hintTextColor="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/idEdtCoursePrice"
+                    android:id="@+id/tv_contact"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
@@ -70,9 +68,8 @@
                     app:boxStrokeColor="@color/purple_200" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!--edit text for adding a course best suited for-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/idTILCourseSuitedFor"
+
                 style="@style/LoginTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,7 +82,7 @@
                 app:hintTextColor="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/idEdtSuitedFor"
+                    android:id="@+id/tv_nic"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
@@ -96,9 +93,8 @@
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!--edit text for adding a course image link-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/idTILCourseImageLink"
+
                 style="@style/LoginTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,7 +107,7 @@
                 app:hintTextColor="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/idEdtCourseImageLink"
+                    android:id="@+id/tv_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
@@ -122,9 +118,8 @@
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!--edit text for adding a course link-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/idTILCourseLink"
+
                 style="@style/LoginTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -137,7 +132,7 @@
                 app:hintTextColor="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/idEdtCourseLink"
+                    android:id="@+id/tv_province"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
@@ -148,10 +143,8 @@
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-
-            <!--edit text for adding a course description-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/idTILCourseDescription"
+
                 style="@style/LoginTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -164,7 +157,7 @@
                 app:hintTextColor="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/idEdtCourseDescription"
+                    android:id="@+id/tv_address"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
@@ -181,9 +174,8 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
-                <!--button for updating a new course-->
                 <Button
-                    android:id="@+id/idBtnAddCourse"
+                    android:id="@+id/btn_confirm"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -195,9 +187,8 @@
                     android:text="Update"
                     android:textAllCaps="false" />
 
-                <!--button for deleting a course-->
                 <Button
-                    android:id="@+id/idBtnDeleteCourse"
+                    android:id="@+id/btn_delete"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"

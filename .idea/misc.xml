@@ -3,6 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/Niki/Niki/app/src/main/res/layout/activity_add_course.xml" value="0.2994791666666667" />
+        <entry key="..\:/AndroidStudioProjects/Niki/Niki/app/src/main/res/layout/activity_add_shipping.xml" value="0.20833333333333334" />
+        <entry key="..\:/AndroidStudioProjects/Niki/Niki/app/src/main/res/layout/activity_edit_course.xml" value="0.2994791666666667" />
+        <entry key="..\:/AndroidStudioProjects/Niki/Niki/app/src/main/res/layout/activity_edit_shipping.xml" value="0.18666666666666668" />
+        <entry key="..\:/AndroidStudioProjects/Niki/Niki/app/src/main/res/layout/activity_main.xml" value="0.2994791666666667" />
+        <entry key="..\:/AndroidStudioProjects/Niki/Niki/app/src/main/res/layout/bottom_sheet_layout.xml" value="0.2948717948717949" />
+        <entry key="..\:/AndroidStudioProjects/Niki/Niki/app/src/main/res/layout/course_rv_item.xml" value="0.2994791666666667" />
+        <entry key="..\:/SLIIT/y2 s2/MAD Updated/Niki/app/src/main/res/layout/activity_add_shipping.xml" value="0.36666666666666664" />
+        <entry key="..\:/SLIIT/y2 s2/MAD Updated/Niki/app/src/main/res/layout/activity_edit_shipping.xml" value="0.36666666666666664" />
+        <entry key="..\:/SLIIT/y2 s2/MAD Updated/Niki/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/SLIIT/y2 s2/MAD Updated/Niki/app/src/main/res/layout/bottom_sheet_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/SLIIT/y2 s2/MAD Updated/Niki/app/src/main/res/layout/shipping_rv_item.xml" value="0.36666666666666664" />
         <entry key="..\:/SLIIT/y2 s2/MAD/week 2/android studio files/MADNEW/app/src/main/res/drawable/button_back.xml" value="0.3828125" />
         <entry key="..\:/SLIIT/y2 s2/MAD/week 2/android studio files/MADNEW/app/src/main/res/drawable/progress_back.xml" value="0.3828125" />
         <entry key="..\:/SLIIT/y2 s2/MAD/week 2/android studio files/MADNEW/app/src/main/res/drawable/round_drawable.xml" value="0.33" />
@@ -15,7 +27,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
